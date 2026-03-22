@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 
+import SuggestToolModal from "@/components/SuggestToolModal";
 import { useTheme } from "@/components/theme-provider";
 
 const links = [
@@ -98,6 +99,7 @@ export function Navbar() {
         </nav>
 
         <div className="flex items-center gap-2">
+          <SuggestToolModal />
           <button
             type="button"
             onClick={toggleTheme}
