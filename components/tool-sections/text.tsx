@@ -7,6 +7,13 @@ import { useMemo, useState } from "react";
 import { ActionBar } from "@/components/tool/ActionBar";
 import { ToolInput } from "@/components/tool/ToolInput";
 import { ToolOutput } from "@/components/tool/ToolOutput";
+import {
+  EmojiPicker,
+  StringEscapeTool,
+  TextMorseTool,
+  TextToSpeech,
+  UnicodeInspector
+} from "@/components/tool-sections/audit/text-tools";
 
 function paste(set: (s: string) => void) {
   void navigator.clipboard.readText().then(set).catch(() => {});
@@ -38,6 +45,16 @@ export function TextSection({ slug }: { slug: string }) {
       return <WsClean />;
     case "text-encrypt":
       return <TextEnc />;
+    case "text-to-speech":
+      return <TextToSpeech />;
+    case "emoji-picker":
+      return <EmojiPicker />;
+    case "string-escape":
+      return <StringEscapeTool />;
+    case "text-morse":
+      return <TextMorseTool />;
+    case "unicode-inspector":
+      return <UnicodeInspector />;
     default:
       return null;
   }

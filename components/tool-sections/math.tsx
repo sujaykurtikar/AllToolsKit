@@ -5,6 +5,7 @@ import { useMemo, useState } from "react";
 import { ActionBar } from "@/components/tool/ActionBar";
 import { ToolInput } from "@/components/tool/ToolInput";
 import { ToolOutput } from "@/components/tool/ToolOutput";
+import { BitwiseCalculator, CurrencyConverter, UnitConverter } from "@/components/tool-sections/audit/math-tools";
 
 export function MathSection({ slug }: { slug: string }) {
   switch (slug) {
@@ -18,6 +19,12 @@ export function MathSection({ slug }: { slug: string }) {
       return <Roman />;
     case "random-number":
       return <RandNum />;
+    case "unit-converter":
+      return <UnitConverter />;
+    case "currency-converter":
+      return <CurrencyConverter />;
+    case "bitwise-calculator":
+      return <BitwiseCalculator />;
     default:
       return null;
   }

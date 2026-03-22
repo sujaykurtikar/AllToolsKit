@@ -6,6 +6,13 @@ import { useEffect, useRef, useState } from "react";
 import { ActionBar } from "@/components/tool/ActionBar";
 import { ToolInput } from "@/components/tool/ToolInput";
 import { ToolOutput } from "@/components/tool/ToolOutput";
+import {
+  ExifViewer,
+  ImageColorPicker,
+  ImageCompressor,
+  ImageFormatConverter,
+  ImageResizer
+} from "@/components/tool-sections/audit/media-tools";
 
 export function ImageSection({ slug }: { slug: string }) {
   switch (slug) {
@@ -19,6 +26,16 @@ export function ImageSection({ slug }: { slug: string }) {
       return <QrGen />;
     case "placeholder-image":
       return <Placeholder />;
+    case "image-compressor":
+      return <ImageCompressor />;
+    case "image-resizer":
+      return <ImageResizer />;
+    case "image-format-converter":
+      return <ImageFormatConverter />;
+    case "image-color-picker":
+      return <ImageColorPicker />;
+    case "exif-viewer":
+      return <ExifViewer />;
     default:
       return null;
   }

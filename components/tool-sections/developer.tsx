@@ -29,6 +29,25 @@ import {
   generateCSharp,
   generateGuids
 } from "@/lib/tool-utils";
+import {
+  BcryptHashTool,
+  CreditCardValidator,
+  CronValidator,
+  CssBeautifier,
+  CssMinifier,
+  CssToTailwind,
+  EmailValidator,
+  HmacGenerator,
+  HtmlMinifier,
+  HttpStatusCodes,
+  IbanValidator,
+  IpValidator,
+  JsMinifier,
+  JsonPathTester,
+  JsonSchemaValidator,
+  JwtGenerator,
+  PublicKeyInspector
+} from "@/components/tool-sections/audit/dev-tools";
 
 function paste(set: (s: string) => void) {
   void navigator.clipboard.readText().then(set).catch(() => {});
@@ -80,6 +99,40 @@ export function DeveloperSection({ slug }: { slug: string }) {
       return <DiffChk />;
     case "lorem-ipsum":
       return <Lorem />;
+    case "css-minifier":
+      return <CssMinifier />;
+    case "js-minifier":
+      return <JsMinifier />;
+    case "html-minifier":
+      return <HtmlMinifier />;
+    case "css-beautifier":
+      return <CssBeautifier />;
+    case "http-status-codes":
+      return <HttpStatusCodes />;
+    case "json-path":
+      return <JsonPathTester />;
+    case "jwt-generator":
+      return <JwtGenerator />;
+    case "css-to-tailwind":
+      return <CssToTailwind />;
+    case "hmac-generator":
+      return <HmacGenerator />;
+    case "bcrypt-hash":
+      return <BcryptHashTool />;
+    case "public-key-inspector":
+      return <PublicKeyInspector />;
+    case "email-validator":
+      return <EmailValidator />;
+    case "credit-card-validator":
+      return <CreditCardValidator />;
+    case "iban-validator":
+      return <IbanValidator />;
+    case "ip-validator":
+      return <IpValidator />;
+    case "json-schema-validator":
+      return <JsonSchemaValidator />;
+    case "cron-validator":
+      return <CronValidator />;
     default:
       return null;
   }

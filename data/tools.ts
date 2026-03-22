@@ -49,7 +49,7 @@ export interface Tool {
 export const siteUrl = "https://pandapath.com";
 
 export const tools: Tool[] = [
-  // Developer (22)
+  // Developer (39)
   {
     slug: "json-formatter",
     name: "JSON Formatter",
@@ -248,7 +248,160 @@ export const tools: Tool[] = [
     tags: ["lorem", "placeholder", "text"],
     related: ["word-counter", "slug-generator"]
   },
-  // Text (12)
+  {
+    slug: "css-minifier",
+    name: "CSS Minifier",
+    description: "Minify CSS in the browser (comments and whitespace).",
+    category: "developer",
+    icon: "CM",
+    tags: ["css", "minify", "optimize"],
+    related: ["css-beautifier", "html-minifier", "js-minifier"]
+  },
+  {
+    slug: "js-minifier",
+    name: "JavaScript Minifier",
+    description: "Minify JavaScript with Terser.",
+    category: "developer",
+    icon: "JM",
+    tags: ["javascript", "minify", "terser"],
+    related: ["html-minifier", "css-minifier"]
+  },
+  {
+    slug: "html-minifier",
+    name: "HTML Minifier",
+    description: "Minify HTML markup (whitespace and comments).",
+    category: "developer",
+    icon: "HM",
+    tags: ["html", "minify", "compress"],
+    related: ["css-minifier", "js-minifier"]
+  },
+  {
+    slug: "css-beautifier",
+    name: "CSS Beautifier",
+    description: "Format CSS with readable indentation.",
+    category: "developer",
+    icon: "CB",
+    tags: ["css", "format", "prettify"],
+    related: ["css-minifier", "css-to-tailwind"]
+  },
+  {
+    slug: "http-status-codes",
+    name: "HTTP Status Codes",
+    description: "Quick reference for common HTTP status codes.",
+    category: "developer",
+    icon: "HS",
+    tags: ["http", "status", "rest"],
+    related: ["http-headers", "json-formatter"]
+  },
+  {
+    slug: "json-path",
+    name: "JSONPath Tester",
+    description: "Query JSON with JSONPath expressions.",
+    category: "developer",
+    icon: "JP",
+    tags: ["json", "jsonpath", "query"],
+    related: ["json-formatter", "json-schema-validator"]
+  },
+  {
+    slug: "jwt-generator",
+    name: "JWT Generator (HS256)",
+    description: "Sign JWTs with a shared secret using HS256.",
+    category: "developer",
+    icon: "JG",
+    tags: ["jwt", "sign", "hs256"],
+    related: ["jwt-decoder", "hmac-generator"]
+  },
+  {
+    slug: "css-to-tailwind",
+    name: "CSS → Tailwind Hints",
+    description: "Heuristic mapping from CSS snippets to Tailwind-style class ideas.",
+    category: "developer",
+    icon: "C2",
+    tags: ["tailwind", "css", "convert"],
+    related: ["tailwind-colors", "css-beautifier"]
+  },
+  {
+    slug: "hmac-generator",
+    name: "HMAC Generator",
+    description: "Compute HMAC-SHA256/384/512 with Web Crypto.",
+    category: "developer",
+    icon: "HK",
+    tags: ["hmac", "sha", "crypto"],
+    related: ["hash-generator", "jwt-generator"]
+  },
+  {
+    slug: "bcrypt-hash",
+    name: "Bcrypt Hash",
+    description: "Hash and verify passwords with bcrypt (bcryptjs).",
+    category: "developer",
+    icon: "BC",
+    tags: ["bcrypt", "password", "hash"],
+    related: ["password-gen", "hash-generator"]
+  },
+  {
+    slug: "public-key-inspector",
+    name: "PEM Public Key → JWK",
+    description: "Import an RSA/EC PEM public key and export JWK (via jose).",
+    category: "developer",
+    icon: "PK",
+    tags: ["pem", "jwk", "rsa"],
+    related: ["jwt-decoder", "jwt-generator"]
+  },
+  {
+    slug: "email-validator",
+    name: "Email Syntax Validator",
+    description: "Check email address syntax (client-side rules).",
+    category: "developer",
+    icon: "EM",
+    tags: ["email", "validation", "syntax"],
+    related: ["regex-tester", "url-encoder"]
+  },
+  {
+    slug: "credit-card-validator",
+    name: "Credit Card (Luhn)",
+    description: "Validate card numbers with the Luhn algorithm.",
+    category: "developer",
+    icon: "CC",
+    tags: ["luhn", "card", "validation"],
+    related: ["iban-validator"]
+  },
+  {
+    slug: "iban-validator",
+    name: "IBAN Validator",
+    description: "Validate IBAN format and checksum (ibantools).",
+    category: "developer",
+    icon: "IB",
+    tags: ["iban", "bank", "validation"],
+    related: ["credit-card-validator"]
+  },
+  {
+    slug: "ip-validator",
+    name: "IP Address Validator",
+    description: "Validate IPv4 and basic IPv6 address strings.",
+    category: "developer",
+    icon: "IV",
+    tags: ["ip", "ipv4", "ipv6"],
+    related: ["ip-lookup", "dns-lookup"]
+  },
+  {
+    slug: "json-schema-validator",
+    name: "JSON Schema Validator",
+    description: "Validate JSON against a JSON Schema (AJV).",
+    category: "developer",
+    icon: "JS",
+    tags: ["json", "schema", "ajv"],
+    related: ["json-formatter", "json-path"]
+  },
+  {
+    slug: "cron-validator",
+    name: "Cron Expression Parser",
+    description: "Parse cron expressions and list next run times (cron-parser).",
+    category: "developer",
+    icon: "CR",
+    tags: ["cron", "schedule", "parser"],
+    related: ["cron-parser"]
+  },
+  // Text (17)
   {
     slug: "word-counter",
     name: "Word & Character Counter",
@@ -357,6 +510,51 @@ export const tools: Tool[] = [
     tags: ["aes", "encrypt", "crypto"],
     related: ["hash-generator", "base64", "password-gen"]
   },
+  {
+    slug: "text-to-speech",
+    name: "Text to Speech",
+    description: "Speak text aloud with the browser speech synthesis API.",
+    category: "text",
+    icon: "TTS",
+    tags: ["speech", "audio", "accessibility"],
+    related: ["word-counter", "unicode-inspector"]
+  },
+  {
+    slug: "emoji-picker",
+    name: "Emoji Picker",
+    description: "Browse and copy common emoji characters.",
+    category: "text",
+    icon: "EJ",
+    tags: ["emoji", "unicode", "copy"],
+    related: ["unicode-inspector", "string-escape"]
+  },
+  {
+    slug: "string-escape",
+    name: "String Escape / Unescape",
+    description: "Escape or unescape strings for JSON, JS, URL, and HTML contexts.",
+    category: "text",
+    icon: "SE",
+    tags: ["escape", "encode", "string"],
+    related: ["url-encoder", "html-entities"]
+  },
+  {
+    slug: "text-morse",
+    name: "Morse Code",
+    description: "Encode and decode Morse code with optional audio playback.",
+    category: "text",
+    icon: "MC",
+    tags: ["morse", "encode", "audio"],
+    related: ["text-to-binary", "rot13"]
+  },
+  {
+    slug: "unicode-inspector",
+    name: "Unicode Inspector",
+    description: "Inspect code points, names, and categories for each character.",
+    category: "text",
+    icon: "UC",
+    tags: ["unicode", "codepoint", "utf-8"],
+    related: ["emoji-picker", "text-to-speech"]
+  },
   // Network (8)
   {
     slug: "ip-lookup",
@@ -430,7 +628,7 @@ export const tools: Tool[] = [
     tags: ["url", "redirect", "shortlink"],
     related: ["url-encoder", "http-headers"]
   },
-  // Image (5)
+  // Image (10)
   {
     slug: "image-to-base64",
     name: "Image to Base64",
@@ -475,6 +673,51 @@ export const tools: Tool[] = [
     icon: "PH",
     tags: ["placeholder", "dummy", "canvas"],
     related: ["image-to-base64", "qr-generator"]
+  },
+  {
+    slug: "image-compressor",
+    name: "Image Compressor",
+    description: "Re-encode images with adjustable JPEG/WebP quality in the browser.",
+    category: "image",
+    icon: "IC",
+    tags: ["image", "compress", "jpeg"],
+    related: ["image-resizer", "image-format-converter"]
+  },
+  {
+    slug: "image-resizer",
+    name: "Image Resizer",
+    description: "Resize images to new dimensions with canvas.",
+    category: "image",
+    icon: "IR",
+    tags: ["resize", "canvas", "dimensions"],
+    related: ["image-compressor", "placeholder-image"]
+  },
+  {
+    slug: "image-format-converter",
+    name: "Image Format Converter",
+    description: "Convert between PNG, JPEG, and WebP in the browser.",
+    category: "image",
+    icon: "IF",
+    tags: ["png", "jpeg", "webp"],
+    related: ["image-compressor", "image-to-base64"]
+  },
+  {
+    slug: "image-color-picker",
+    name: "Image Color Picker",
+    description: "Pick a pixel color from an uploaded image.",
+    category: "image",
+    icon: "PX",
+    tags: ["color", "eyedropper", "hex"],
+    related: ["color-converter", "image-compressor"]
+  },
+  {
+    slug: "exif-viewer",
+    name: "EXIF Viewer",
+    description: "Read EXIF metadata from JPEG and other supported images (exifr).",
+    category: "image",
+    icon: "EX",
+    tags: ["exif", "metadata", "photo"],
+    related: ["image-compressor", "image-resizer"]
   },
   // Color (5)
   {
@@ -522,7 +765,7 @@ export const tools: Tool[] = [
     tags: ["tailwind", "colors", "design"],
     related: ["color-converter", "gradient-generator"]
   },
-  // Math (5)
+  // Math (8)
   {
     slug: "base-converter",
     name: "Number Base Converter",
@@ -567,6 +810,33 @@ export const tools: Tool[] = [
     icon: "RNG",
     tags: ["random", "crypto", "numbers"],
     related: ["guid-generator", "password-gen"]
+  },
+  {
+    slug: "unit-converter",
+    name: "Unit Converter",
+    description: "Convert length, mass, temperature, speed, area, and volume.",
+    category: "math",
+    icon: "UN",
+    tags: ["units", "convert", "metric"],
+    related: ["currency-converter", "base-converter"]
+  },
+  {
+    slug: "currency-converter",
+    name: "Currency Converter",
+    description: "Convert amounts using Frankfurter daily ECB rates (no API key).",
+    category: "math",
+    icon: "FX",
+    tags: ["currency", "forex", "ecb"],
+    related: ["unit-converter", "percentage-calc"]
+  },
+  {
+    slug: "bitwise-calculator",
+    name: "Bitwise Calculator",
+    description: "AND, OR, XOR, shifts on decimal or hex integers.",
+    category: "math",
+    icon: "BW",
+    tags: ["bitwise", "binary", "hex"],
+    related: ["base-converter", "scientific-calc"]
   },
   // File (4)
   {
