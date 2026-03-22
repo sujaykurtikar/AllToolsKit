@@ -7,11 +7,12 @@ import { CategorySidebar } from "@/components/CategorySidebar";
 import { Hero } from "@/components/Hero";
 import { SearchOverlay } from "@/components/SearchOverlay";
 import { ToolCard } from "@/components/ToolCard";
+import { searchToolsAsync } from "@/lib/search/search-async";
 import {
   categoryLabels,
   parseCategoryQuery,
-  searchTools,
   tools,
+  type Tool,
   type ToolCategory
 } from "@/data/tools";
 
@@ -37,6 +38,7 @@ export function HomeClient({ initialCategory }: HomeClientProps) {
   const searchParams = useSearchParams();
 
   const [searchQuery, setSearchQuery] = useState("");
+  const [searchMatches, setSearchMatches] = useState<Tool[]>(tools);
   const [activeCategory, setActiveCategory] = useState<ToolCategory | "all">(initialCategory);
   const [overlay, setOverlay] = useState(false);
 
@@ -76,8 +78,21 @@ export function HomeClient({ initialCategory }: HomeClientProps) {
     return () => window.clearTimeout(t);
   }, [searchParams]);
 
-  /** All tools matching the search (empty query = full catalog). */
-  const searchMatches = useMemo(() => searchTools(searchQuery), [searchQuery]);
+  useEffect(() => {
+    let cancelled = false;
+    const delay = searchQuery.trim() ? 160 : 0;
+    const t = window.setTimeout(() => {
+      searchToolsAsync(searchQuery).then((r) => {
+        if (!cancelled) {
+          setSearchMatches(r);
+        }
+      });
+    }, delay);
+    return () => {
+      cancelled = true;
+      window.clearTimeout(t);
+    };
+  }, [searchQuery]);
 
   /** When a category pill is selected: matches in that category (shown first). */
   const primaryTools = useMemo(() => {
@@ -146,12 +161,12 @@ export function HomeClient({ initialCategory }: HomeClientProps) {
             </p>
           ) : activeCategory === "all" ? (
             <section id="cat-all">
-              <div className="sticky top-14 z-10 border-b border-[var(--border-color)] bg-[var(--bg-tertiary)] px-4 py-3 md:px-6">
-                <h2 className="text-lg font-bold text-[var(--text-primary)]">
+              <div className="sticky top-14 z-10 border-b border-[var(--border-color)]/80 bg-[var(--bg-tertiary)]/90 px-4 py-3.5 backdrop-blur-md md:px-6">
+                <h2 className="font-display text-lg font-bold tracking-tight text-[var(--text-primary)]">
                   All tools — {searchMatches.length} tools
                 </h2>
               </div>
-              <div className="grid grid-cols-1 gap-4 p-4 sm:grid-cols-2 md:p-6">
+              <div className="grid grid-cols-1 gap-5 p-4 sm:grid-cols-2 md:gap-6 md:p-6">
                 {displayedSortedForAll.map((tool) => (
                   <ToolCard key={tool.slug} tool={tool} />
                 ))}
@@ -161,12 +176,12 @@ export function HomeClient({ initialCategory }: HomeClientProps) {
             <>
               {primarySorted.length > 0 ? (
                 <section id={`cat-${activeCategory}`}>
-                  <div className="sticky top-14 z-10 border-b border-[var(--border-color)] bg-[var(--bg-tertiary)] px-4 py-3 md:px-6">
-                    <h2 className="text-lg font-bold text-[var(--text-primary)]">
+                  <div className="sticky top-14 z-10 border-b border-[var(--border-color)]/80 bg-[var(--bg-tertiary)]/90 px-4 py-3.5 backdrop-blur-md md:px-6">
+                    <h2 className="font-display text-lg font-bold tracking-tight text-[var(--text-primary)]">
                       {categoryLabels[activeCategory]} — {primarySorted.length} tools
                     </h2>
                   </div>
-                  <div className="grid grid-cols-1 gap-4 p-4 sm:grid-cols-2 md:p-6">
+                  <div className="grid grid-cols-1 gap-5 p-4 sm:grid-cols-2 md:gap-6 md:p-6">
                     {primarySorted.map((tool) => (
                       <ToolCard key={tool.slug} tool={tool} />
                     ))}
@@ -181,8 +196,8 @@ export function HomeClient({ initialCategory }: HomeClientProps) {
                     primarySorted.length > 0 ? "border-t border-[var(--border-color)]" : undefined
                   }
                 >
-                  <div className="sticky top-14 z-10 border-b border-[var(--border-color)] bg-[var(--bg-tertiary)] px-4 py-3 md:px-6">
-                    <h2 className="text-lg font-bold text-[var(--text-primary)]">
+                  <div className="sticky top-14 z-10 border-b border-[var(--border-color)]/80 bg-[var(--bg-tertiary)]/90 px-4 py-3.5 backdrop-blur-md md:px-6">
+                    <h2 className="font-display text-lg font-bold tracking-tight text-[var(--text-primary)]">
                       Also matching your search — {secondaryTools.length} tools
                     </h2>
                     <p className="mt-1 text-sm text-[var(--text-secondary)]">Other categories</p>
@@ -194,10 +209,10 @@ export function HomeClient({ initialCategory }: HomeClientProps) {
                     }
                     return (
                       <div key={cat}>
-                        <h3 className="px-4 pt-4 text-base font-semibold text-[var(--text-primary)] md:px-6">
+                        <h3 className="px-4 pt-5 font-display text-base font-semibold text-[var(--text-primary)] md:px-6">
                           {categoryLabels[cat]}
                         </h3>
-                        <div className="grid grid-cols-1 gap-4 p-4 pt-2 sm:grid-cols-2 md:px-6 md:pb-6">
+                        <div className="grid grid-cols-1 gap-5 p-4 pt-2 sm:grid-cols-2 md:gap-6 md:px-6 md:pb-6">
                           {list.map((tool) => (
                             <ToolCard key={tool.slug} tool={tool} />
                           ))}

@@ -4,15 +4,15 @@ import type { ToolCategory } from "@/data/tools";
 import { categoryLabels, tools } from "@/data/tools";
 
 const categoryColors: Record<ToolCategory, string> = {
-  developer: "#1a56db",
+  developer: "#2563eb",
   text: "#16a34a",
   color: "#db2777",
   network: "#0d9488",
   math: "#7c3aed",
   image: "#ea580c",
   file: "#f97316",
-  date: "#6b7280",
-  designer: "#be185d"
+  date: "#64748b",
+  designer: "#c026d3"
 };
 
 const categoryOrder: ToolCategory[] = [
@@ -53,10 +53,13 @@ export function CategorySidebar({ active, onSelect }: Props) {
 
   return (
     <aside
-      className="hidden w-[180px] shrink-0 border-r border-[var(--border-color)] md:block"
+      className="hidden w-[196px] shrink-0 border-r border-[var(--border-color)]/80 bg-[var(--bg-secondary)]/50 md:block"
       style={{ position: "sticky", top: "56px", alignSelf: "flex-start" }}
     >
-      <nav className="flex flex-col gap-0.5 py-4 pr-2">
+      <nav className="flex flex-col gap-1 py-5 pr-3">
+        <p className="mb-2 px-3 font-display text-[10px] font-bold uppercase tracking-[0.2em] text-[var(--text-tertiary)]">
+          Categories
+        </p>
         {items.map((item) => {
           const isActive = active === item.key;
           return (
@@ -64,23 +67,32 @@ export function CategorySidebar({ active, onSelect }: Props) {
               key={item.key}
               type="button"
               onClick={() => onSelect(item.key)}
-              className={`flex w-full items-center gap-2 rounded-r-lg px-3 py-2 text-left text-sm transition ${
+              className={`group flex w-full items-center gap-2.5 rounded-xl px-3 py-2.5 text-left font-display text-sm transition-all ${
                 isActive
-                  ? "border-l-2 border-[var(--blue-primary)] bg-[var(--blue-light)] font-medium text-[var(--blue-primary)]"
-                  : "border-l-2 border-transparent text-[var(--text-secondary)] hover:bg-[var(--bg-tertiary)]"
+                  ? "bg-[var(--blue-light)] font-semibold text-[var(--blue-primary)] shadow-sm ring-1 ring-[var(--blue-primary)]/15 dark:bg-[var(--blue-primary)]/18 dark:text-[#93c5fd]"
+                  : "text-[var(--text-secondary)] hover:bg-[var(--bg-tertiary)]/90 hover:text-[var(--text-primary)]"
               }`}
             >
               {item.color ? (
                 <span
-                  className="h-1.5 w-1.5 shrink-0 rounded-full"
+                  className="h-2 w-2 shrink-0 rounded-full shadow-sm ring-2 ring-white/20 dark:ring-black/20"
                   style={{ background: item.color }}
                   aria-hidden
                 />
               ) : (
-                <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--text-tertiary)]" aria-hidden />
+                <span
+                  className="h-2 w-2 shrink-0 rounded-full bg-gradient-to-br from-slate-400 to-slate-500"
+                  aria-hidden
+                />
               )}
               <span className="min-w-0 flex-1 truncate">{item.label}</span>
-              <span className="shrink-0 rounded-full bg-[var(--bg-tertiary)] px-1.5 py-0.5 text-[11px] text-[var(--text-tertiary)]">
+              <span
+                className={`shrink-0 rounded-lg px-2 py-0.5 font-display text-[11px] font-semibold tabular-nums ${
+                  isActive
+                    ? "bg-white/80 text-[var(--blue-primary)] dark:bg-black/25 dark:text-[#bfdbfe]"
+                    : "bg-[var(--bg-tertiary)] text-[var(--text-tertiary)] group-hover:text-[var(--text-secondary)]"
+                }`}
+              >
                 {item.count}
               </span>
             </button>

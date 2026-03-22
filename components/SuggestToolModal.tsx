@@ -29,24 +29,7 @@ export default function SuggestToolModal() {
       <button
         type="button"
         onClick={() => setIsOpen(true)}
-        style={{
-          background: "#1E1E2E",
-          color: "#FFFFFF",
-          border: "1px solid rgba(255,255,255,0.15)",
-          borderRadius: "10px",
-          padding: "8px 18px",
-          fontSize: "13px",
-          fontWeight: 500,
-          cursor: "pointer",
-          whiteSpace: "nowrap",
-          transition: "background 0.15s",
-        }}
-        onMouseEnter={(e) => {
-          e.currentTarget.style.background = "#2A2A3E";
-        }}
-        onMouseLeave={(e) => {
-          e.currentTarget.style.background = "#1E1E2E";
-        }}
+        className="font-display whitespace-nowrap rounded-xl border border-[var(--border-color)] bg-[var(--card-bg)] px-3.5 py-2 text-[13px] font-semibold text-[var(--text-primary)] shadow-sm transition hover:border-[var(--blue-primary)]/40 hover:bg-[var(--bg-tertiary)] dark:bg-[var(--bg-tertiary)]/80"
       >
         + Suggest a tool
       </button>
@@ -56,85 +39,30 @@ export default function SuggestToolModal() {
           onClick={(e) => {
             if (e.target === e.currentTarget) setIsOpen(false);
           }}
-          style={{
-            position: "fixed",
-            inset: 0,
-            background: "rgba(0,0,0,0.55)",
-            zIndex: 999,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            padding: "16px",
-          }}
+          className="fixed inset-0 z-[999] flex items-center justify-center bg-slate-900/45 p-4 backdrop-blur-sm dark:bg-black/55"
           role="dialog"
           aria-modal="true"
           aria-label="Suggest a tool"
         >
-          <div
-            style={{
-              background: "var(--card-bg, #ffffff)",
-              borderRadius: "16px",
-              width: "100%",
-              maxWidth: "520px",
-              border: "1px solid var(--border-color, #E5E7EB)",
-              overflow: "hidden",
-              display: "flex",
-              flexDirection: "column",
-              maxHeight: "90vh",
-            }}
-          >
-            <div
-              style={{
-                padding: "16px 20px 14px",
-                borderBottom: "1px solid var(--border-color, #E5E7EB)",
-                display: "flex",
-                alignItems: "flex-start",
-                justifyContent: "space-between",
-              }}
-            >
+          <div className="flex max-h-[90vh] w-full max-w-[520px] flex-col overflow-hidden rounded-2xl border border-[var(--border-color)]/90 bg-[var(--card-bg)] shadow-[var(--shadow-lg)] ring-1 ring-black/[0.04] dark:ring-white/[0.06]">
+            <div className="flex items-start justify-between border-b border-[var(--border-color)]/90 px-5 py-4">
               <div>
-                <p
-                  style={{
-                    fontSize: "15px",
-                    fontWeight: 600,
-                    color: "var(--text-primary, #111827)",
-                    margin: 0,
-                  }}
-                >
-                  Suggest a tool
-                </p>
-                <p
-                  style={{
-                    fontSize: "12px",
-                    color: "var(--text-secondary, #6B7280)",
-                    margin: "3px 0 0",
-                  }}
-                >
+                <p className="font-display text-[15px] font-semibold text-[var(--text-primary)]">Suggest a tool</p>
+                <p className="mt-1 text-xs leading-relaxed text-[var(--text-secondary)]">
                   Tell us what you need — we read every suggestion.
                 </p>
               </div>
-
               <button
                 type="button"
                 onClick={() => setIsOpen(false)}
                 aria-label="Close suggestion form"
-                style={{
-                  background: "transparent",
-                  border: "none",
-                  cursor: "pointer",
-                  padding: "4px",
-                  color: "var(--text-secondary, #6B7280)",
-                  fontSize: "18px",
-                  lineHeight: 1,
-                  marginLeft: "12px",
-                  flexShrink: 0,
-                }}
+                className="ml-3 shrink-0 rounded-lg p-1.5 text-lg leading-none text-[var(--text-tertiary)] transition hover:bg-[var(--bg-tertiary)] hover:text-[var(--text-primary)]"
               >
                 ✕
               </button>
             </div>
 
-            <div style={{ flex: 1, overflow: "hidden" }}>
+            <div className="min-h-0 flex-1 overflow-hidden">
               <iframe
                 src={GOOGLE_FORM_EMBED_URL}
                 width="100%"
@@ -143,43 +71,20 @@ export default function SuggestToolModal() {
                 marginHeight={0}
                 marginWidth={0}
                 title="Suggest a tool form"
-                style={{ display: "block" }}
+                className="block"
               >
                 Loading form...
               </iframe>
             </div>
 
-            <div
-              style={{
-                padding: "10px 20px",
-                borderTop: "1px solid var(--border-color, #E5E7EB)",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-              }}
-            >
-              <p
-                style={{
-                  fontSize: "11px",
-                  color: "var(--text-tertiary, #9CA3AF)",
-                  margin: 0,
-                }}
-              >
+            <div className="flex items-center justify-between gap-3 border-t border-[var(--border-color)]/90 px-5 py-3">
+              <p className="text-[11px] text-[var(--text-tertiary)]">
                 Responses go to contactpandapath@gmail.com
               </p>
               <button
                 type="button"
                 onClick={() => setIsOpen(false)}
-                style={{
-                  fontSize: "12px",
-                  padding: "6px 14px",
-                  borderRadius: "7px",
-                  border: "1px solid var(--border-color, #E5E7EB)",
-                  background: "transparent",
-                  cursor: "pointer",
-                  color: "var(--text-secondary, #6B7280)",
-                  fontWeight: 500,
-                }}
+                className="font-display shrink-0 rounded-xl border border-[var(--border-color)] bg-[var(--bg-tertiary)]/80 px-3.5 py-2 text-xs font-semibold text-[var(--text-secondary)] transition hover:border-[var(--blue-primary)]/35 hover:text-[var(--blue-primary)]"
               >
                 Close
               </button>

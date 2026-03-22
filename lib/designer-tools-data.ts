@@ -3,6 +3,7 @@ export const designerToolsData: {
   slug: string;
   name: string;
   description: string;
+  searchText?: string;
   category: "designer";
   icon: string;
   tags: string[];
@@ -67,6 +68,8 @@ export const designerToolsData: {
     slug: "accessible-color-pairs",
     name: "Accessible Color Pairs",
     description: "Suggest foreground colors for a background that pass WCAG AA/AAA.",
+    searchText:
+      "wcag contrast readable pairing text on background ui accessibility colorblind",
     category: "designer",
     icon: "AP",
     tags: ["wcag", "contrast", "a11y"],
@@ -222,6 +225,8 @@ export const designerToolsData: {
     slug: "css-grid-generator",
     name: "CSS Grid Generator",
     description: "Visual grid: columns, rows, gaps — outputs grid-template CSS.",
+    searchText:
+      "layout grid template areas columns rows fr gap subgrid responsive dashboard",
     category: "designer",
     icon: "GR",
     tags: ["grid", "css", "layout"],
@@ -231,6 +236,8 @@ export const designerToolsData: {
     slug: "flexbox-playground",
     name: "Flexbox Playground",
     description: "Tweak flex properties with live preview and copyable CSS.",
+    searchText:
+      "flex layout align justify center distribute gap wrap row column navbar toolbar",
     category: "designer",
     icon: "FX",
     tags: ["flexbox", "css", "layout"],
@@ -386,6 +393,8 @@ export const designerToolsData: {
     slug: "tailwind-config-generator",
     name: "Tailwind Config Generator",
     description: "Build a tailwind.config.js theme from brand colors, fonts, and spacing.",
+    searchText:
+      "tailwind theme extend plugin postcss jit design system preset colors spacing",
     category: "designer",
     icon: "TW",
     tags: ["tailwind", "config", "design system"],

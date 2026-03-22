@@ -21,7 +21,12 @@ function SunIcon() {
         stroke="currentColor"
         strokeWidth="2"
       />
-      <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+      <path
+        d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
     </svg>
   );
 }
@@ -70,27 +75,25 @@ export function Navbar() {
   };
 
   return (
-    <header
-      className="sticky top-0 z-[100] flex h-14 items-center border-b border-[var(--border-color)] bg-[var(--bg-primary)]"
-      style={{ backgroundColor: "var(--bg-primary)" }}
-    >
-      <div className="mx-auto flex w-full max-w-[1200px] items-center justify-between gap-4 px-4 md:px-6">
+    <header className="sticky top-0 z-[100] border-b border-[var(--border-color)]/80 bg-[var(--bg-primary)]/75 backdrop-blur-xl backdrop-saturate-150 dark:bg-[var(--bg-primary)]/80">
+      <div className="mx-auto flex h-14 w-full max-w-[1200px] items-center justify-between gap-4 px-4 md:px-6">
         <Link
           href="/"
-          className="shrink-0 text-base font-semibold text-[var(--text-primary)]"
+          className="font-display shrink-0 text-base font-bold tracking-tight"
         >
-          PandaPath Tools
+          <span className="text-gradient-brand">PandaPath</span>
+          <span className="text-[var(--text-primary)]"> Tools</span>
         </Link>
 
-        <nav className="hidden items-center gap-6 sm:flex">
+        <nav className="hidden items-center gap-0.5 sm:flex">
           {links.map((link) => (
             <Link
               key={link.href}
               href={link.href}
-              className={`text-sm transition ${
+              className={`rounded-lg px-3 py-2 font-display text-sm font-medium transition-colors ${
                 isActive(link.href)
-                  ? "font-semibold text-[var(--blue-primary)]"
-                  : "text-[var(--text-secondary)] hover:text-[var(--blue-primary)]"
+                  ? "border-b-2 border-[var(--blue-primary)] text-[var(--blue-primary)]"
+                  : "border-b-2 border-transparent text-[var(--text-secondary)] hover:text-[var(--text-primary)]"
               }`}
             >
               {link.label}
@@ -103,7 +106,7 @@ export function Navbar() {
           <button
             type="button"
             onClick={toggleTheme}
-            className="rounded-lg border border-[var(--border-color)] p-2 text-[var(--text-secondary)] transition hover:border-[var(--blue-primary)] hover:text-[var(--blue-primary)]"
+            className="rounded-xl border border-[var(--border-color)] bg-[var(--card-bg)]/80 p-2 text-[var(--text-secondary)] shadow-sm transition hover:border-[var(--blue-primary)]/40 hover:text-[var(--blue-primary)] dark:bg-[var(--bg-tertiary)]/50"
             aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
           >
             {theme === "dark" ? <SunIcon /> : <MoonIcon />}
@@ -111,7 +114,7 @@ export function Navbar() {
 
           <button
             type="button"
-            className="sm:hidden rounded-lg border border-[var(--border-color)] p-2 text-[var(--text-secondary)]"
+            className="rounded-xl border border-[var(--border-color)] bg-[var(--card-bg)]/80 p-2 text-[var(--text-secondary)] shadow-sm sm:hidden dark:bg-[var(--bg-tertiary)]/50"
             aria-label={open ? "Close menu" : "Open menu"}
             aria-expanded={open}
             onClick={() => setOpen((v) => !v)}
@@ -122,16 +125,16 @@ export function Navbar() {
       </div>
 
       {open ? (
-        <div className="absolute left-0 right-0 top-14 border-b border-[var(--border-color)] bg-[var(--bg-primary)] px-4 py-3 shadow-md sm:hidden">
-          <nav className="flex flex-col gap-3">
+        <div className="absolute left-0 right-0 top-14 border-b border-[var(--border-color)] bg-[var(--bg-primary)]/95 px-4 py-4 shadow-lg backdrop-blur-xl sm:hidden">
+          <nav className="flex flex-col gap-1">
             {links.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
                 onClick={() => setOpen(false)}
-                className={`text-sm ${
+                className={`rounded-lg px-3 py-2.5 font-display text-sm font-medium ${
                   isActive(link.href)
-                    ? "font-semibold text-[var(--blue-primary)]"
+                    ? "bg-[var(--blue-light)] text-[var(--blue-primary)] dark:bg-[var(--blue-primary)]/15"
                     : "text-[var(--text-secondary)]"
                 }`}
               >

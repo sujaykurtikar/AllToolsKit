@@ -1,3 +1,7 @@
+/**
+ * Tool search copy: optional `searchText` holds extra synonyms/use-cases for lexical + semantic search.
+ * Card UI still uses `description`. Also include slug-derived phrases via getSearchableText (slug words + related tools).
+ */
 import { designerToolsData } from "@/lib/designer-tools-data";
 
 export type ToolCategory =
@@ -40,10 +44,28 @@ export interface Tool {
   slug: string;
   name: string;
   description: string;
+  /** Optional extra phrases/synonyms for search and embeddings (not shown on cards by default). */
+  searchText?: string;
   category: ToolCategory;
   icon: string;
   tags: string[];
   related: string[];
+}
+
+/** Canonical blob for lexical search and embedding text (slug words + related tools + optional searchText). */
+export function getSearchableText(t: Tool): string {
+  const slugPhrase = t.slug.replace(/-/g, " ");
+  const relatedPhrase = t.related.map((r) => r.replace(/-/g, " ")).join(" ");
+  return [
+    t.name,
+    t.description,
+    t.tags.join(" "),
+    t.searchText ?? "",
+    slugPhrase,
+    relatedPhrase
+  ]
+    .join(" ")
+    .toLowerCase();
 }
 
 export const siteUrl = "https://pandapath.com";
@@ -54,6 +76,8 @@ export const tools: Tool[] = [
     slug: "json-formatter",
     name: "JSON Formatter",
     description: "Format, minify, and validate JSON in your browser.",
+    searchText:
+      "pretty print beautify stringify api response debugger network tab invalid json fix indentation",
     category: "developer",
     icon: "{}",
     tags: ["json", "format", "validate", "minify"],
@@ -153,6 +177,8 @@ export const tools: Tool[] = [
     slug: "jwt-decoder",
     name: "JWT Decoder",
     description: "Decode JWT header, payload, and signature (client-side).",
+    searchText:
+      "json web token bearer oauth inspect claims decode token debug authentication session",
     category: "developer",
     icon: "JW",
     tags: ["jwt", "token", "decode"],
@@ -162,6 +188,8 @@ export const tools: Tool[] = [
     slug: "regex-tester",
     name: "Regex Tester",
     description: "Test regular expressions with live highlighting.",
+    searchText:
+      "regular expression pattern matcher pcre grep capture groups test string",
     category: "developer",
     icon: "RX",
     tags: ["regex", "pattern", "test"],
@@ -180,6 +208,7 @@ export const tools: Tool[] = [
     slug: "base64",
     name: "Base64 Encoder / Decoder",
     description: "Encode and decode Base64 text and files.",
+    searchText: "b64 encode decode binary text data uri atob btoa attachment",
     category: "developer",
     icon: "64",
     tags: ["base64", "encode", "decode"],
@@ -216,6 +245,7 @@ export const tools: Tool[] = [
     slug: "sql-formatter",
     name: "SQL Formatter",
     description: "Format SQL with dialects for MySQL, Postgres, and more.",
+    searchText: "prettify sql query database postgres mysql dialect indent",
     category: "developer",
     icon: "SQ",
     tags: ["sql", "format", "database"],
@@ -406,6 +436,7 @@ export const tools: Tool[] = [
     slug: "word-counter",
     name: "Word & Character Counter",
     description: "Count words, characters, sentences, and reading time.",
+    searchText: "word count characters reading time blog essay length limit twitter",
     category: "text",
     icon: "WC",
     tags: ["words", "count", "stats"],
@@ -678,6 +709,7 @@ export const tools: Tool[] = [
     slug: "image-compressor",
     name: "Image Compressor",
     description: "Re-encode images with adjustable JPEG/WebP quality in the browser.",
+    searchText: "compress photo smaller file size jpeg webp quality optimize upload",
     category: "image",
     icon: "IC",
     tags: ["image", "compress", "jpeg"],
@@ -724,6 +756,7 @@ export const tools: Tool[] = [
     slug: "color-converter",
     name: "Color Converter",
     description: "Convert colors between HEX, RGB, HSL, HSV, and CMYK.",
+    searchText: "hex rgb hsl hsv cmyk pick color space css value",
     category: "color",
     icon: "CL",
     tags: ["color", "hex", "rgb"],
@@ -751,6 +784,8 @@ export const tools: Tool[] = [
     slug: "contrast-checker",
     name: "Contrast Checker (WCAG)",
     description: "Check color contrast ratios for accessibility.",
+    searchText:
+      "wcag aa aaa accessibility readable text foreground background ratio a11y vision",
     category: "color",
     icon: "AA",
     tags: ["wcag", "contrast", "a11y"],
@@ -815,6 +850,7 @@ export const tools: Tool[] = [
     slug: "unit-converter",
     name: "Unit Converter",
     description: "Convert length, mass, temperature, speed, area, and volume.",
+    searchText: "metric imperial miles kilometers pounds kilograms celsius fahrenheit si",
     category: "math",
     icon: "UN",
     tags: ["units", "convert", "metric"],
@@ -938,23 +974,153 @@ export function getAllSlugs(): string[] {
   return tools.map((t) => t.slug);
 }
 
-export function searchTools(query: string): Tool[] {
-  const q = query.trim().toLowerCase();
-  if (!q) {
+function tokenizeQuery(query: string): string[] {
+  return query
+    .toLowerCase()
+    .split(/\s+/)
+    .map((w) => w.replace(/[^\w/+.-]/g, ""))
+    .filter((w) => w.length > 0);
+}
+
+/** Max Levenshtein distance vs a word (depends on token length). */
+function maxEditDistanceForToken(len: number): number {
+  if (len <= 2) {
+    return 0;
+  }
+  if (len <= 4) {
+    return 1;
+  }
+  if (len <= 7) {
+    return 2;
+  }
+  return 3;
+}
+
+function levenshtein(a: string, b: string): number {
+  const m = a.length;
+  const n = b.length;
+  if (m === 0) {
+    return n;
+  }
+  if (n === 0) {
+    return m;
+  }
+  const prev = new Array<number>(n + 1);
+  const curr = new Array<number>(n + 1);
+  for (let j = 0; j <= n; j++) {
+    prev[j] = j;
+  }
+  for (let i = 1; i <= m; i++) {
+    curr[0] = i;
+    const ac = a.charCodeAt(i - 1);
+    for (let j = 1; j <= n; j++) {
+      const cost = ac === b.charCodeAt(j - 1) ? 0 : 1;
+      curr[j] = Math.min(curr[j - 1] + 1, prev[j] + 1, prev[j - 1] + cost);
+    }
+    for (let j = 0; j <= n; j++) {
+      prev[j] = curr[j];
+    }
+  }
+  return prev[n];
+}
+
+function wordCandidatesFromBlob(text: string, slug: string): string[] {
+  const fromText = text
+    .split(/[^a-z0-9+/]+/)
+    .map((w) => w.trim())
+    .filter((w) => w.length > 0);
+  const fromSlug = slug
+    .replace(/-/g, " ")
+    .split(/\s+/)
+    .filter((w) => w.length > 0);
+  return [...fromText, ...fromSlug];
+}
+
+/**
+ * Strict: substring match. Fuzzy: same, or Levenshtein within budget vs any word (typo tolerance).
+ */
+function tokenMatchesLexical(text: string, slug: string, token: string, fuzzy: boolean): boolean {
+  if (text.includes(token) || slug.includes(token)) {
+    return true;
+  }
+  if (!fuzzy) {
+    return false;
+  }
+  const maxD = maxEditDistanceForToken(token.length);
+  if (maxD === 0) {
+    return false;
+  }
+  for (const w of wordCandidatesFromBlob(text, slug)) {
+    if (Math.abs(w.length - token.length) > maxD) {
+      continue;
+    }
+    if (levenshtein(w, token) <= maxD) {
+      return true;
+    }
+  }
+  return false;
+}
+
+/**
+ * Lexical search: every query token must match (AND). First strict substrings; if no results, fuzzy words.
+ * Results sorted by match quality (name/slug bonuses).
+ */
+export function searchToolsLexical(query: string): Tool[] {
+  const raw = query.trim().toLowerCase();
+  if (!raw) {
     return tools;
   }
-  return tools.filter((t) => {
-    if (t.name.toLowerCase().includes(q)) {
-      return true;
+  const tokens = tokenizeQuery(query);
+  if (tokens.length === 0) {
+    return tools;
+  }
+
+  const slugBonus = (t: Tool, q: string): number => {
+    const slug = t.slug.toLowerCase();
+    let b = 0;
+    if (slug === q.replace(/\s+/g, "-")) {
+      b += 4;
     }
-    if (t.description.toLowerCase().includes(q)) {
-      return true;
+    if (t.name.toLowerCase().includes(raw)) {
+      b += 2;
     }
-    if (t.slug.includes(q)) {
-      return true;
+    if (slug.includes(raw.replace(/\s+/g, "-"))) {
+      b += 1;
     }
-    return t.tags.some((tag) => tag.toLowerCase().includes(q));
-  });
+    return b;
+  };
+
+  const run = (fuzzy: boolean) => {
+    return tools
+      .map((t) => {
+        const text = getSearchableText(t);
+        const slug = t.slug.toLowerCase();
+        let hits = 0;
+        for (const tok of tokens) {
+          if (tokenMatchesLexical(text, slug, tok, fuzzy)) {
+            hits += 1;
+          }
+        }
+        if (hits < tokens.length) {
+          return { t, score: -1 };
+        }
+        const base = hits + slugBonus(t, raw);
+        return { t, score: base };
+      })
+      .filter((x) => x.score >= 0)
+      .sort((a, b) => b.score - a.score);
+  };
+
+  const strict = run(false);
+  if (strict.length > 0) {
+    return strict.map((x) => x.t);
+  }
+  return run(true).map((x) => x.t);
+}
+
+/** Lexical-only search (sync). Prefer `searchToolsAsync` for hybrid semantic ranking in the UI. */
+export function searchTools(query: string): Tool[] {
+  return searchToolsLexical(query);
 }
 
 export function isValidToolSlug(slug: string): boolean {
