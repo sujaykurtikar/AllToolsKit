@@ -2,20 +2,17 @@ import Link from "next/link";
 
 export function Footer() {
   return (
-    <footer className="border-t border-gray-200 bg-white">
-      <div className="mx-auto flex w-full max-w-[900px] flex-col gap-4 px-4 py-8 text-sm text-gray-600 sm:flex-row sm:items-center sm:justify-between">
+    <footer className="mt-auto border-t border-[var(--border-color)] bg-[var(--bg-primary)]">
+      <div className="mx-auto flex max-w-[1200px] flex-col gap-3 px-4 py-4 text-[13px] text-[var(--text-tertiary)] sm:flex-row sm:items-center sm:justify-between md:px-6">
+        <p>PandaPath Tools — 100% free, no sign-up required</p>
         <div className="flex flex-wrap gap-4">
-          <Link href="/about" className="hover:text-blue-600">
+          <Link href="/about" className="hover:text-[var(--blue-primary)]">
             About
           </Link>
-          <Link href="/privacy" className="hover:text-blue-600">
+          <Link href="/privacy" className="hover:text-[var(--blue-primary)]">
             Privacy
           </Link>
-          <Link href="/contact" className="hover:text-blue-600">
-            Contact
-          </Link>
         </div>
-        <p>© {new Date().getFullYear()} AllToolsKit</p>
       </div>
     </footer>
   );

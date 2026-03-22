@@ -10,16 +10,37 @@
     "test": "node --experimental-strip-types --test tests/**/*.test.ts"
   },
   "dependencies": {
+    "@types/crypto-js": "^4.2.2",
+    "@types/js-yaml": "^4.0.9",
+    "@types/qrcode": "^1.5.6",
+    "cronstrue": "^3.14.0",
+    "crypto-js": "^4.2.0",
+    "diff": "^8.0.3",
+    "dompurify": "^3.3.3",
+    "fast-xml-parser": "^5.5.8",
+    "isomorphic-dompurify": "^3.6.0",
+    "js-yaml": "^4.1.1",
+    "marked": "^17.0.5",
     "next": "^16.1.6",
+    "qrcode": "^1.5.4",
     "react": "19.0.0",
-    "react-dom": "19.0.0"
+    "react-dom": "19.0.0",
+    "sql-formatter": "^15.7.2",
+    "svgo": "^4.0.1",
+    "uuid": "^13.0.0",
+    "zxcvbn": "^4.4.2"
   },
   "devDependencies": {
+    "@types/diff": "^7.0.2",
     "@types/node": "22.13.10",
     "@types/react": "19.0.10",
     "@types/react-dom": "19.0.4",
+    "@types/uuid": "^10.0.0",
+    "@types/zxcvbn": "^4.4.5",
     "autoprefixer": "10.4.20",
+    "eslint-config-prettier": "^10.1.8",
     "postcss": "8.5.3",
+    "prettier": "^3.8.1",
     "tailwindcss": "3.4.17",
     "typescript": "5.8.2"
   }
