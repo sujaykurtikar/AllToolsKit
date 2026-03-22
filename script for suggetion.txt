@@ -1,0 +1,250 @@
+Implement a "Suggest a Tool" feature for PandaPath Tools using 
+Google Forms embedded in a modal (Option B — iframe approach).
+No backend, no npm packages needed.
+
+## STEP 1 — Google Form Setup (do this manually first)
+1. Go to forms.google.com
+2. Sign in with contactpandapath@gmail.com
+3. Create new form titled "Suggest a Tool — PandaPath Tools"
+4. Add these 3 questions:
+   - Question 1: "Tool name" → Short answer → Toggle REQUIRED on
+   - Question 2: "What should it do?" → Paragraph → Optional
+   - Question 3: "Your email" → Short answer → Optional
+5. Click the paint palette icon → Change theme color to #1A56DB (blue)
+6. Click Send → Link tab → Copy the form URL
+7. Change the URL from:
+   https://docs.google.com/forms/d/FORM_ID/viewform
+   to:
+   https://docs.google.com/forms/d/FORM_ID/viewform?embedded=true
+   (add ?embedded=true at the end — this is the iframe URL)
+8. Set up email notifications:
+   - Click the responses tab (bar chart icon)
+   - Click three dots menu → Get email notifications for new responses
+   - This sends every submission to contactpandapath@gmail.com
+9. Save the embedded URL — you will need it in the code below
+
+## STEP 2 — Create the component
+
+Create file: src/components/SuggestToolModal.tsx
+
+'use client'
+
+import { useState, useEffect } from 'react'
+
+const GOOGLE_FORM_EMBED_URL = 'PASTE_YOUR_EMBEDDED_FORM_URL_HERE'
+// Replace with your actual embedded URL from Step 1
+// Example: https://docs.google.com/forms/d/1AbCdEfGhIj/viewform?embedded=true
+
+export default function SuggestToolModal() {
+  const [isOpen, setIsOpen] = useState(false)
+
+  // Close on Escape key
+  useEffect(() => {
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setIsOpen(false)
+    }
+    if (isOpen) {
+      document.addEventListener('keydown', handleKey)
+      document.body.style.overflow = 'hidden'
+    }
+    return () => {
+      document.removeEventListener('keydown', handleKey)
+      document.body.style.overflow = ''
+    }
+  }, [isOpen])
+
+  return (
+    <>
+      {/* Trigger Button */}
+      <button
+        onClick={() => setIsOpen(true)}
+        style={{
+          background: '#1E1E2E',
+          color: '#FFFFFF',
+          border: '1px solid rgba(255,255,255,0.15)',
+          borderRadius: '10px',
+          padding: '8px 18px',
+          fontSize: '13px',
+          fontWeight: 500,
+          cursor: 'pointer',
+          whiteSpace: 'nowrap',
+          transition: 'background 0.15s',
+        }}
+        onMouseEnter={e => (e.currentTarget.style.background = '#2A2A3E')}
+        onMouseLeave={e => (e.currentTarget.style.background = '#1E1E2E')}
+      >
+        + Suggest a tool
+      </button>
+
+      {/* Modal Overlay */}
+      {isOpen && (
+        <div
+          onClick={(e) => {
+            if (e.target === e.currentTarget) setIsOpen(false)
+          }}
+          style={{
+            position: 'fixed',
+            inset: 0,
+            background: 'rgba(0,0,0,0.55)',
+            zIndex: 999,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: '16px',
+          }}
+          role="dialog"
+          aria-modal="true"
+          aria-label="Suggest a tool"
+        >
+          {/* Modal Box */}
+          <div
+            style={{
+              background: 'var(--card-bg, #ffffff)',
+              borderRadius: '16px',
+              width: '100%',
+              maxWidth: '520px',
+              border: '1px solid var(--border-color, #E5E7EB)',
+              overflow: 'hidden',
+              display: 'flex',
+              flexDirection: 'column',
+              maxHeight: '90vh',
+            }}
+          >
+            {/* Modal Header */}
+            <div
+              style={{
+                padding: '16px 20px 14px',
+                borderBottom: '1px solid var(--border-color, #E5E7EB)',
+                display: 'flex',
+                alignItems: 'flex-start',
+                justifyContent: 'space-between',
+              }}
+            >
+              <div>
+                <p style={{
+                  fontSize: '15px',
+                  fontWeight: 600,
+                  color: 'var(--text-primary, #111827)',
+                  margin: 0,
+                }}>
+                  Suggest a tool
+                </p>
+                <p style={{
+                  fontSize: '12px',
+                  color: 'var(--text-secondary, #6B7280)',
+                  margin: '3px 0 0',
+                }}>
+                  Tell us what you need — we read every suggestion.
+                </p>
+              </div>
+
+              {/* Close Button */}
+              <button
+                onClick={() => setIsOpen(false)}
+                aria-label="Close suggestion form"
+                style={{
+                  background: 'transparent',
+                  border: 'none',
+                  cursor: 'pointer',
+                  padding: '4px',
+                  color: 'var(--text-secondary, #6B7280)',
+                  fontSize: '18px',
+                  lineHeight: 1,
+                  marginLeft: '12px',
+                  flexShrink: 0,
+                }}
+              >
+                ✕
+              </button>
+            </div>
+
+            {/* Google Form iframe */}
+            <div style={{ flex: 1, overflow: 'hidden' }}>
+              <iframe
+                src={GOOGLE_FORM_EMBED_URL}
+                width="100%"
+                height="480"
+                frameBorder="0"
+                marginHeight={0}
+                marginWidth={0}
+                title="Suggest a tool form"
+                style={{ display: 'block' }}
+              >
+                Loading form...
+              </iframe>
+            </div>
+
+            {/* Modal Footer */}
+            <div
+              style={{
+                padding: '10px 20px',
+                borderTop: '1px solid var(--border-color, #E5E7EB)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+              }}
+            >
+              <p style={{
+                fontSize: '11px',
+                color: 'var(--text-tertiary, #9CA3AF)',
+                margin: 0,
+              }}>
+                Responses go to contactpandapath@gmail.com
+              </p>
+              <button
+                onClick={() => setIsOpen(false)}
+                style={{
+                  fontSize: '12px',
+                  padding: '6px 14px',
+                  borderRadius: '7px',
+                  border: '1px solid var(--border-color, #E5E7EB)',
+                  background: 'transparent',
+                  cursor: 'pointer',
+                  color: 'var(--text-secondary, #6B7280)',
+                  fontWeight: 500,
+                }}
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </>
+  )
+}
+
+## STEP 3 — Add to Navbar
+
+In src/components/Navbar.tsx:
+
+import SuggestToolModal from './SuggestToolModal'
+
+Inside the navbar JSX, add the component next to 
+the dark mode toggle button:
+
+<div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+  <SuggestToolModal />
+  <DarkModeToggle />
+</div>
+
+## STEP 4 — Done checklist
+- [ ] Google Form created at forms.google.com with contactpandapath@gmail.com
+- [ ] Email notifications turned ON in form responses settings
+- [ ] Embedded URL pasted into GOOGLE_FORM_EMBED_URL constant
+- [ ] Component added to Navbar
+- [ ] Test: click button → modal opens → fill form → submit
+- [ ] Check contactpandapath@gmail.com inbox for test submission
+
+## Behaviour summary
+- Button click → modal opens with backdrop
+- Clicking outside modal (backdrop) → closes modal
+- Escape key → closes modal
+- Close / X button → closes modal  
+- Form submits inside iframe → Google handles it
+- Every submission → saved to Google Sheet automatically
+- Every submission → email notification to contactpandapath@gmail.com
+- No backend needed
+- No API keys needed
+- No npm packages needed
+- Works on Vercel with zero extra config
