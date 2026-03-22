@@ -23,7 +23,8 @@ const CATEGORY_SECTION_ORDER: ToolCategory[] = [
   "math",
   "image",
   "file",
-  "date"
+  "date",
+  "designer"
 ];
 
 function matchesCategory(tool: (typeof tools)[number], cat: ToolCategory | "all") {
@@ -95,8 +96,6 @@ export function HomeClient({ initialCategory }: HomeClientProps) {
     }
     return map;
   }, [displayed]);
-
-  const order: ToolCategory[] = ["developer", "text", "color", "network", "math", "image", "file", "date"];
 
   /** When showing "All", one flat list sorted by category order then name (avoids a misleading "Developer" header). */
   const displayedSortedForAll = useMemo(() => {

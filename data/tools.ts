@@ -1,3 +1,5 @@
+import { designerToolsData } from "@/lib/designer-tools-data";
+
 export type ToolCategory =
   | "developer"
   | "text"
@@ -6,7 +8,8 @@ export type ToolCategory =
   | "math"
   | "color"
   | "file"
-  | "date";
+  | "date"
+  | "designer";
 
 const CATEGORY_VALUES = new Set<ToolCategory | "all">([
   "all",
@@ -17,7 +20,8 @@ const CATEGORY_VALUES = new Set<ToolCategory | "all">([
   "math",
   "image",
   "file",
-  "date"
+  "date",
+  "designer"
 ]);
 
 /** Parses `?category=` query values for the home page filter. */
@@ -646,7 +650,8 @@ export const tools: Tool[] = [
     icon: "PS",
     tags: ["password", "strength", "security"],
     related: ["password-gen", "hash-generator"]
-  }
+  },
+  ...designerToolsData
 ];
 
 const slugSet = new Set(tools.map((t) => t.slug));
@@ -694,5 +699,6 @@ export const categoryLabels: Record<ToolCategory, string> = {
   math: "Math",
   color: "Colors",
   file: "File",
-  date: "Date"
+  date: "Date",
+  designer: "Designer"
 };

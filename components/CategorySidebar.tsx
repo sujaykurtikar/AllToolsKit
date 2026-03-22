@@ -11,7 +11,8 @@ const categoryColors: Record<ToolCategory, string> = {
   math: "#7c3aed",
   image: "#ea580c",
   file: "#f97316",
-  date: "#6b7280"
+  date: "#6b7280",
+  designer: "#be185d"
 };
 
 const categoryOrder: ToolCategory[] = [
@@ -22,7 +23,8 @@ const categoryOrder: ToolCategory[] = [
   "math",
   "image",
   "file",
-  "date"
+  "date",
+  "designer"
 ];
 
 type Props = {

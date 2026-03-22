@@ -4,6 +4,7 @@ import { getToolBySlug } from "@/data/tools";
 
 import { ColorSection } from "@/components/tool-sections/color";
 import { DateSection } from "@/components/tool-sections/date";
+import { DesignerSection } from "@/components/tool-sections/designer";
 import { DeveloperSection } from "@/components/tool-sections/developer";
 import { FileSection } from "@/components/tool-sections/file";
 import { ImageSection } from "@/components/tool-sections/image";
@@ -33,6 +34,8 @@ export function ToolContent({ slug }: { slug: string }) {
       return <FileSection slug={slug} />;
     case "date":
       return <DateSection slug={slug} />;
+    case "designer":
+      return <DesignerSection slug={slug} />;
     default:
       return null;
   }

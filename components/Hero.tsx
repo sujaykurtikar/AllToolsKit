@@ -15,7 +15,8 @@ const pills: { key: ToolCategory | "all"; label: string }[] = [
   { key: "math", label: "Math" },
   { key: "image", label: "Image" },
   { key: "file", label: "File" },
-  { key: "date", label: "Date" }
+  { key: "date", label: "Date" },
+  { key: "designer", label: "Designer" }
 ];
 
 type Props = {

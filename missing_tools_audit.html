@@ -1,0 +1,273 @@
+
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  .wrap{padding:1rem 0;font-family:var(--font-sans)}
+  .section{margin-bottom:1.5rem}
+  .sec-head{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+  .sec-title{font-size:14px;font-weight:500;color:var(--color-text-primary)}
+  .cat-badge{font-size:11px;padding:2px 8px;border-radius:20px;font-weight:500}
+  .tools-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px}
+  .tool{padding:10px 12px;border-radius:10px;border:0.5px solid}
+  .tool-name{font-size:12px;font-weight:500;margin-bottom:3px}
+  .tool-desc{font-size:11px;line-height:1.4}
+  .tool-note{font-size:10px;margin-top:5px;padding:3px 7px;border-radius:4px;display:inline-block;font-weight:500}
+
+  .new{border-color:#97C459;background:#EAF3DE}
+  .new .tool-name{color:#27500A}
+  .new .tool-desc{color:#3B6D11}
+  .new-badge{background:#C0DD97;color:#27500A}
+  .new .tool-note{background:#C0DD97;color:#27500A}
+
+  .need-be{border-color:#EF9F27;background:#FAEEDA}
+  .need-be .tool-name{color:#633806}
+  .need-be .tool-desc{color:#854F0B}
+  .be-badge{background:#FAC775;color:#633806}
+  .need-be .tool-note{background:#FAC775;color:#633806}
+
+  .hard{border-color:#F09595;background:#FCEBEB}
+  .hard .tool-name{color:#791F1F}
+  .hard .tool-desc{color:#A32D2D}
+  .hard-badge{background:#F7C1C1;color:#791F1F}
+  .hard .tool-note{background:#F7C1C1;color:#791F1F}
+
+  .legend{display:flex;gap:16px;margin-bottom:16px;flex-wrap:wrap}
+  .leg{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--color-text-secondary)}
+  .leg-dot{width:10px;height:10px;border-radius:3px}
+</style>
+<div class="wrap">
+  <div class="legend">
+    <div class="leg"><div class="leg-dot" style="background:#97C459"></div>Client-side only (easy add)</div>
+    <div class="leg"><div class="leg-dot" style="background:#EF9F27"></div>Needs backend/API</div>
+    <div class="leg"><div class="leg-dot" style="background:#F09595"></div>Complex / heavy library</div>
+  </div>
+
+  <div class="section">
+    <div class="sec-head">
+      <div class="sec-title">Image & Media Tools</div>
+      <span class="cat-badge" style="background:#FAC775;color:#633806">7 missing</span>
+    </div>
+    <div class="tools-grid">
+      <div class="tool hard">
+        <div class="tool-name">Image Compressor</div>
+        <div class="tool-desc">Compress JPG/PNG/WebP in browser. Drag & drop, quality slider.</div>
+        <span class="tool-note">Canvas API + browser-image-compression lib</span>
+      </div>
+      <div class="tool hard">
+        <div class="tool-name">Image Resizer</div>
+        <div class="tool-desc">Resize images to exact px or % — download result.</div>
+        <span class="tool-note">Canvas API, client-side</span>
+      </div>
+      <div class="tool hard">
+        <div class="tool-name">Image Format Converter</div>
+        <div class="tool-desc">Convert PNG↔JPG↔WebP↔GIF in browser.</div>
+        <span class="tool-note">Canvas API, client-side</span>
+      </div>
+      <div class="tool need-be">
+        <div class="tool-name">OCR — Image to Text</div>
+        <div class="tool-desc">Extract text from images or PDFs. Upload & get text out.</div>
+        <span class="tool-note">Tesseract.js (WASM, heavy ~10MB)</span>
+      </div>
+      <div class="tool hard">
+        <div class="tool-name">Image Color Picker</div>
+        <div class="tool-desc">Upload image, click any pixel to get its HEX/RGB color.</div>
+        <span class="tool-note">Canvas getImageData(), client-side</span>
+      </div>
+      <div class="tool need-be">
+        <div class="tool-name">Background Remover</div>
+        <div class="tool-desc">Remove image background automatically.</div>
+        <span class="tool-note">Needs ML model — heavy or API</span>
+      </div>
+      <div class="tool hard">
+        <div class="tool-name">Exif Viewer</div>
+        <div class="tool-desc">View EXIF metadata from photos — camera, GPS, settings.</div>
+        <span class="tool-note">exifr.js, client-side</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="sec-head">
+      <div class="sec-title">Developer Tools (missing)</div>
+      <span class="cat-badge" style="background:#97C459;color:#27500A">8 missing</span>
+    </div>
+    <div class="tools-grid">
+      <div class="tool new">
+        <div class="tool-name">CSS Minifier</div>
+        <div class="tool-desc">Minify CSS files — remove comments, whitespace, shorthand.</div>
+        <span class="tool-note">clean-css lib, client-side</span>
+      </div>
+      <div class="tool new">
+        <div class="tool-name">JS Minifier</div>
+        <div class="tool-desc">Minify JavaScript — terser in browser via WASM.</div>
+        <span class="tool-note">terser lib, client-side</span>
+      </div>
+      <div class="tool new">
+        <div class="tool-name">HTML Minifier</div>
+        <div class="tool-desc">Minify HTML — remove whitespace, comments.</div>
+        <span class="tool-note">html-minifier-terser, client-side</span>
+      </div>
+      <div class="tool new">
+        <div class="tool-name">CSS Beautifier</div>
+        <div class="tool-desc">Format and prettify CSS with configurable indent.</div>
+        <span class="tool-note">prettier/css, client-side</span>
+      </div>
+      <div class="tool new">
+        <div class="tool-name">HTTP Status Codes</div>
+        <div class="tool-desc">Reference list of all HTTP status codes with descriptions.</div>
+        <span class="tool-note">Static data, no lib needed</span>
+      </div>
+      <div class="tool new">
+        <div class="tool-name">JSON Path Tester</div>
+        <div class="tool-desc">Test JSONPath expressions against a JSON document live.</div>
+        <span class="tool-note">jsonpath-plus lib, client-side</span>
+      </div>
+      <div class="tool new">
+        <div class="tool-name">JWT Generator</div>
+        <div class="tool-desc">Generate signed JWT tokens with custom payload + secret.</div>
+        <span class="tool-note">jose lib, client-side</span>
+      </div>
+      <div class="tool new">
+        <div class="tool-name">CSS to Tailwind</div>
+        <div class="tool-desc">Convert plain CSS properties to Tailwind utility classes.</div>
+        <span class="tool-note">css-to-tailwind lib, client-side</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="sec-head">
+      <div class="sec-title">Text & Writing Tools (missing)</div>
+      <span class="cat-badge" style="background:#97C459;color:#27500A">5 missing</span>
+    </div>
+    <div class="tools-grid">
+      <div class="tool new">
+        <div class="tool-name">Text to Speech</div>
+        <div class="tool-desc">Convert text to audio using browser Web Speech API.</div>
+        <span class="tool-note">Web Speech API, no lib needed</span>
+      </div>
+      <div class="tool new">
+        <div class="tool-name">Emoji Picker</div>
+        <div class="tool-desc">Browse, search and copy any emoji with one click.</div>
+        <span class="tool-note">Static emoji data, client-side</span>
+      </div>
+      <div class="tool new">
+        <div class="tool-name">String Escape / Unescape</div>
+        <div class="tool-desc">Escape/unescape strings for JSON, JS, SQL, regex.</div>
+        <span class="tool-note">Native JS, no lib needed</span>
+      </div>
+      <div class="tool new">
+        <div class="tool-name">Text to Morse Code</div>
+        <div class="tool-desc">Convert text to Morse code and back. Play audio.</div>
+        <span class="tool-note">Web Audio API, client-side</span>
+      </div>
+      <div class="tool new">
+        <div class="tool-name">Unicode Inspector</div>
+        <div class="tool-desc">Show Unicode code points and names for each character.</div>
+        <span class="tool-note">Native JS charCodeAt(), no lib</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="sec-head">
+      <div class="sec-title">Security / Crypto Tools (missing)</div>
+      <span class="cat-badge" style="background:#97C459;color:#27500A">4 missing</span>
+    </div>
+    <div class="tools-grid">
+      <div class="tool new">
+        <div class="tool-name">HMAC Generator</div>
+        <div class="tool-desc">Generate HMAC-SHA256/512 signatures with a secret key.</div>
+        <span class="tool-note">crypto.subtle, client-side</span>
+      </div>
+      <div class="tool new">
+        <div class="tool-name">Bcrypt Hash Tool</div>
+        <div class="tool-desc">Hash and verify passwords using bcrypt in browser.</div>
+        <span class="tool-note">bcryptjs lib, client-side</span>
+      </div>
+      <div class="tool new">
+        <div class="tool-name">SSL/TLS Cipher Checker</div>
+        <div class="tool-desc">Check supported TLS versions and cipher suites for a domain.</div>
+        <span class="tool-note">Needs backend API</span>
+      </div>
+      <div class="tool new">
+        <div class="tool-name">Public Key Inspector</div>
+        <div class="tool-desc">Decode and inspect RSA/EC public keys and certificates.</div>
+        <span class="tool-note">node-forge or pkijs, client-side</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="sec-head">
+      <div class="sec-title">Validators & Checkers (missing)</div>
+      <span class="cat-badge" style="background:#97C459;color:#27500A">6 missing</span>
+    </div>
+    <div class="tools-grid">
+      <div class="tool new">
+        <div class="tool-name">Email Validator</div>
+        <div class="tool-desc">Validate email address syntax + optional MX record check.</div>
+        <span class="tool-note">Regex client-side, MX needs API</span>
+      </div>
+      <div class="tool new">
+        <div class="tool-name">Credit Card Validator</div>
+        <div class="tool-desc">Validate card numbers using Luhn algorithm. Detect card type.</div>
+        <span class="tool-note">Luhn algo, no lib needed</span>
+      </div>
+      <div class="tool new">
+        <div class="tool-name">IBAN Validator</div>
+        <div class="tool-desc">Validate International Bank Account Numbers.</div>
+        <span class="tool-note">ibantools lib, client-side</span>
+      </div>
+      <div class="tool new">
+        <div class="tool-name">IP Address Validator</div>
+        <div class="tool-desc">Validate IPv4 and IPv6 addresses and CIDR ranges.</div>
+        <span class="tool-note">Regex, no lib needed</span>
+      </div>
+      <div class="tool new">
+        <div class="tool-name">JSON Schema Validator</div>
+        <div class="tool-desc">Validate JSON against a JSON Schema (draft-07 / 2020-12).</div>
+        <span class="tool-note">ajv lib, client-side</span>
+      </div>
+      <div class="tool new">
+        <div class="tool-name">Cron Validator</div>
+        <div class="tool-desc">Validate a cron expression and show next run times.</div>
+        <span class="tool-note">cronstrue lib (already planned)</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="sec-head">
+      <div class="sec-title">Converters & Calculators (missing)</div>
+      <span class="cat-badge" style="background:#97C459;color:#27500A">5 missing</span>
+    </div>
+    <div class="tools-grid">
+      <div class="tool new">
+        <div class="tool-name">Unit Converter</div>
+        <div class="tool-desc">Convert length, weight, temp, speed, area, volume — all in one.</div>
+        <span class="tool-note">Static data, no lib needed</span>
+      </div>
+      <div class="tool new">
+        <div class="tool-name">Currency Converter</div>
+        <div class="tool-desc">Convert between currencies using live exchange rates.</div>
+        <span class="tool-note">Needs exchange rate API</span>
+      </div>
+      <div class="tool new">
+        <div class="tool-name">Aspect Ratio Calculator</div>
+        <div class="tool-desc">Calculate aspect ratios — great for responsive design.</div>
+        <span class="tool-note">Pure math, no lib needed</span>
+      </div>
+      <div class="tool new">
+        <div class="tool-name">Bitwise Calculator</div>
+        <div class="tool-desc">Perform AND, OR, XOR, NOT, shift operations on numbers.</div>
+        <span class="tool-note">Native JS, no lib needed</span>
+      </div>
+      <div class="tool new">
+        <div class="tool-name">Color Blindness Simulator</div>
+        <div class="tool-desc">Preview how an image looks with different types of color blindness.</div>
+        <span class="tool-note">Canvas API + color matrices</span>
+      </div>
+    </div>
+  </div>
+
+</div>
