@@ -64,12 +64,21 @@ body {
 }
 
 /* Native inputs inherit light body text but often keep a white background — fix contrast in dark mode */
-input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="file"]):not([type="color"]),
+input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="file"]):not([type="color"]):not(
+    .input-unstyled
+  ),
 select,
 textarea {
   background-color: var(--input-bg);
   color: var(--text-primary);
   border-color: var(--border-color);
+}
+
+/* Search / text fields inside a pre-styled bar — no second “box” (must beat global input background) */
+input.input-unstyled {
+  background-color: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
 }
 
 input::placeholder,

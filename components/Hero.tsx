@@ -51,8 +51,18 @@ export function Hero({ searchQuery, onSearch, activeCategory, onCategoryFilter }
       </p>
 
       <div className="mx-auto mt-8 max-w-[720px]">
-        <div className="flex h-12 items-center gap-3 rounded-[10px] border border-[#d1d5db] bg-[var(--card-bg)] px-4">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" className="shrink-0 text-[var(--text-tertiary)]" aria-hidden>
+        <div
+          role="search"
+          className="flex items-center gap-2 rounded-xl border border-[var(--border-color)] bg-[var(--card-bg)] px-3 py-2.5 shadow-sm sm:gap-3 sm:px-4"
+        >
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            className="pointer-events-none shrink-0 text-[var(--text-tertiary)]"
+            aria-hidden
+          >
             <path d="M21 21l-4.35-4.35M11 18a7 7 0 100-14 7 7 0 000 14z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
           </svg>
           <input
@@ -60,10 +70,10 @@ export function Hero({ searchQuery, onSearch, activeCategory, onCategoryFilter }
             value={searchQuery}
             onChange={(e) => onSearch(e.target.value)}
             placeholder="Search tools... e.g. JSON, regex, base64"
-            className="min-w-0 flex-1 border-0 bg-transparent text-sm text-[var(--text-primary)] outline-none"
+            className="input-unstyled min-h-[2.25rem] min-w-0 flex-1 bg-transparent py-1 text-sm leading-normal text-[var(--text-primary)] outline-none focus:outline-none focus-visible:ring-0 appearance-none"
             aria-label="Search tools"
           />
-          <span className="shrink-0 rounded-full bg-[var(--blue-light)] px-3 py-1 text-xs font-semibold text-[var(--blue-primary)]">
+          <span className="inline-flex shrink-0 select-none items-center justify-center rounded-lg border border-[var(--blue-primary)]/30 bg-[var(--blue-light)] px-2.5 py-1.5 text-[11px] font-semibold leading-none text-[var(--blue-primary)] tabular-nums">
             {tools.length} tools
           </span>
         </div>

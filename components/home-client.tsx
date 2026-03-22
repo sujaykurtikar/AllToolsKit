@@ -15,6 +15,17 @@ import {
   type ToolCategory
 } from "@/data/tools";
 
+const CATEGORY_SECTION_ORDER: ToolCategory[] = [
+  "developer",
+  "text",
+  "color",
+  "network",
+  "math",
+  "image",
+  "file",
+  "date"
+];
+
 function matchesCategory(tool: (typeof tools)[number], cat: ToolCategory | "all") {
   if (cat === "all") {
     return true;
@@ -60,7 +71,7 @@ export function HomeClient({ initialCategory }: HomeClientProps) {
     if (!cat) {
       return;
     }
-    const id = `cat-${cat}`;
+    const id = cat === "all" ? "cat-all" : `cat-${cat}`;
     const el = document.getElementById(id);
     if (!el) {
       return;
@@ -87,6 +98,21 @@ export function HomeClient({ initialCategory }: HomeClientProps) {
 
   const order: ToolCategory[] = ["developer", "text", "color", "network", "math", "image", "file", "date"];
 
+  /** When showing "All", one flat list sorted by category order then name (avoids a misleading "Developer" header). */
+  const displayedSortedForAll = useMemo(() => {
+    if (activeCategory !== "all") {
+      return displayed;
+    }
+    return [...displayed].sort((a, b) => {
+      const ai = CATEGORY_SECTION_ORDER.indexOf(a.category);
+      const bi = CATEGORY_SECTION_ORDER.indexOf(b.category);
+      if (ai !== bi) {
+        return ai - bi;
+      }
+      return a.name.localeCompare(b.name);
+    });
+  }, [displayed, activeCategory]);
+
   return (
     <div>
       <Hero
@@ -102,8 +128,21 @@ export function HomeClient({ initialCategory }: HomeClientProps) {
             <p className="py-16 text-center text-[var(--text-secondary)]">
               No tools found for &apos;{searchQuery}&apos;
             </p>
+          ) : activeCategory === "all" ? (
+            <section id="cat-all">
+              <div className="sticky top-14 z-10 border-b border-[var(--border-color)] bg-[var(--bg-tertiary)] px-4 py-3 md:px-6">
+                <h2 className="text-lg font-bold text-[var(--text-primary)]">
+                  All tools — {displayed.length} tools
+                </h2>
+              </div>
+              <div className="grid grid-cols-1 gap-4 p-4 sm:grid-cols-2 md:p-6">
+                {displayedSortedForAll.map((tool) => (
+                  <ToolCard key={tool.slug} tool={tool} />
+                ))}
+              </div>
+            </section>
           ) : (
-            order.map((cat) => {
+            CATEGORY_SECTION_ORDER.map((cat) => {
               const list = grouped.get(cat);
               if (!list?.length) {
                 return null;
